@@ -1,0 +1,31 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salon Qeydiyyatı</title>
+    <link rel="stylesheet" href="{% static 'salons/register_salon.css' %}">
+</head>
+<body>
+    <div class="btn">
+        <a href="{% url 'home' %}" class="new-ad-button">&times;</a>
+    </div>
+    <div class="register-container">
+        <h2>Salon Qeydiyyatı</h2>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }} <!-- Renders all fields in <p> tags -->
+            <button type="submit">Qeydiyyatdan Keç</button>
+        </form>
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        <p>Artıq bir hesabınız var? <a href="{% url 'login_user' %}">Giriş Edin</a></p>
+    </div>
+</body>
+</html>

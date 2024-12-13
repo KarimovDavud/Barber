@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barber Qeydiyyatı</title>
+    <link rel="stylesheet" href="{% static 'users/register_barber.css' %}">
+</head>
+<body>
+    <!-- Close button to return to home page -->
+    <div class="btn">
+        <a href="{% url 'home' %}" class="new-ad-button">&times;</a>
+    </div>
+
+    <!-- Registration container -->
+    <div class="register-container">
+        <!-- Registration form header -->
+        <h2>Barber Qeydiyyatı</h2>
+        
+        <!-- Registration form -->
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <!-- Barber Registration Form Fields -->
+            {{ form.as_p }}
+            
+            <!-- Start and End Time for Working Hours -->
+            <div class="form-group">
+                <label for="start_time">Başlanğıc Saatı:</label>
+                <input type="time" name="start_time" id="start_time" required>
+            </div>
+
+            <div class="form-group">
+                <label for="end_time">Bitmə Saatı:</label>
+                <input type="time" name="end_time" id="end_time" required>
+            </div>
+
+            <button type="submit">Qeydiyyatdan Keç</button>
+        </form>
+        
+        <!-- Display messages -->
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li class="message">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        
+        <!-- Link to login page -->
+        <p>Bir hesabınız var? <a href="{% url 'login_user' %}">Giriş Edin</a></p>
+    </div>
+</body>
+</html>

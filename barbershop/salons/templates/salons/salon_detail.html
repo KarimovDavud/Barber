@@ -1,0 +1,71 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ salon.name }} - Salon Details</title>
+    <link rel="stylesheet" href="{% static 'salons/salon_detail.css' %}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>{{ salon.name }}</h1>
+            <h3>{{ salon.address }}</h3>
+            {% if salon.image %}
+                <img src="{{ salon.image.url }}" alt="{{ salon.name }}" class="salon-image">
+            {% else %}
+                <p>No image available for this salon.</p>
+            {% endif %}
+        </header>
+        <div class="details">
+            <h2>Services Offered</h2>
+            <ul>
+                {% for service in services %}
+                    <li>
+                        {{ service.name }} - 
+                        {% if service.price %}
+                            {{ service.price }}
+                        {% else %}
+                            Ödənişsiz
+                        {% endif %}
+                    </li>
+                {% empty %}
+                    <li>No services available.</li>
+                {% endfor %}
+            </ul>
+            <h2>Barbers</h2>
+            <ul>
+                {% for barber in barbers %}
+                    <li>
+                        <a href="{% url 'barber_detail' barber.id %}">
+                            <img src="{{ barber.image.url }}" alt="{{ barber.first_name }} {{ barber.last_name }}" style="width: 50px; height: 50px; border-radius: 100%;">
+                            {{ barber.first_name }} {{ barber.last_name }}
+                        </a>
+                    </li>
+                {% empty %}
+                    <li>No barbers available in this salon.</li>
+                {% endfor %}
+            </ul>
+            <h2>Social Links</h2>
+            <p>TikTok: 
+                {% if salon.tiktok_username %}
+                    <a href="{{ salon.tiktok_link }}" target="_blank">{{ salon.tiktok_username }}</a>
+                {% else %}
+                    No TikTok link available.
+                {% endif %}
+            </p>
+            <p>Instagram: 
+                {% if salon.instagram_username %}
+                    <a href="{{ salon.instagram_link }}" target="_blank">{{ salon.instagram_username }}</a>
+                {% else %}
+                    No Instagram link available.
+                {% endif %}
+            </p>
+        </div>
+        <footer>
+            <a href="{% url 'home' %}">Back to Home</a>
+        </footer>
+    </div>
+</body>
+</html>

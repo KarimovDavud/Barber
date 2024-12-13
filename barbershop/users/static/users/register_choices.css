@@ -1,0 +1,51 @@
+
+
+
+
+
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    text-align: center;
+}
+
+h1 {
+    color: #333;
+    margin-bottom: 30px;
+}
+
+.registration-options {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Spacing between the links */
+}
+
+.registration-link {
+    text-decoration: none;
+    padding: 15px;
+    background-color: #5cb85c;
+    color: white;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.registration-link:hover {
+    background-color: #4cae4c; /* Darker shade on hover */
+}
+
+.registration-link:active {
+    background-color: #3e8e41; /* Darker shade when clicked */
+}
+

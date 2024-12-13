@@ -1,0 +1,83 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+.register-container {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Logo Styling */
+.logo-container {
+    margin-bottom: 20px;
+}
+
+.logo {
+    width: 100px;
+    height: auto;
+}
+
+/* Form Styling */
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+form button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 16px;
+}
+
+form button:hover {
+    background-color: #0056b3;
+}
+
+/* Messages Styling */
+.messages {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 15px;
+    color: #d9534f;
+}
+
+.message {
+    background-color: #f8d7da;
+    padding: 10px;
+    border: 1px solid #f5c6cb;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+
+/* Close Button Styling */
+.btn {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+.new-ad-button {
+    font-size: 24px;
+    color: #333;
+    text-decoration: none;
+}
+
+.new-ad-button:hover {
+    color: #d9534f;
+}

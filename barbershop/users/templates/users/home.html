@@ -1,0 +1,109 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="{% static 'users/home.css' %}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Welcome to the Home Page</h1>
+        </header>
+
+        <div class="content">
+            {% if user.is_authenticated %}
+                <div class="profile-card">
+                    <h2>Hello, {{ user.first_name }}!</h2>
+                    <p>Email: {{ user.email }}</p>
+                    {% if user_profile %}
+                        <p>Phone: {{ user_profile.phone }}</p>
+                        <p>Gender: {{ user_profile.gender }}</p>
+                        <p>Birth Date: {{ user_profile.birth_date }}</p>
+                    {% else %}
+                        <p>No additional profile information available.</p>
+                    {% endif %}
+                    <button id="logoutButton">Logout</button>
+                </div>
+            {% else %}
+                <div class="login-register">
+                    <p>Welcome! Please choose an option to continue:</p>
+                    <a href="{% url 'login_user' %}" class="btn">Login</a>
+                    <a href="{% url 'register_user' %}" class="btn">Register</a>
+                </div>
+            {% endif %}
+
+            <!-- Salonlar və bərbərlər listi -->
+            <div class="salons-barbers">
+                <h2>Our Salons</h2>
+                <ul>
+                    {% for salon in salons %}
+                        <li>
+                            <a href="{% url 'salon_detail' salon.id %}">
+                                {% if salon.image %} <!-- Check if the image exists -->
+                                    <img src="{{ salon.image.url }}" alt="{{ salon.name }}" class="salon-image">
+                                {% else %}
+                                    <img src="{% static 'default_salon_image.jpg' %}" alt="Default Salon Image" class="salon-image"> <!-- Use a default image if none -->
+                                {% endif %}
+                                <div>{{ salon.name }} - {{ salon.address }}</div>
+                            </a>
+                        </li>
+                    {% empty %}
+                        <li>No salons available.</li>
+                    {% endfor %}
+                </ul>
+
+                <h2>Our Barbers</h2>
+                <ul>
+                    {% for barber in users %}
+                        <li>
+                            <a href="{% url 'barber_detail' barber.id %}">
+                                {% if barber.image %} <!-- Check if the image exists -->
+                                    <img src="{{ barber.image.url }}" alt="{{ barber.first_name }}" class="barber-image">
+                                {% else %}
+                                    <img src="{% static 'default_barber_image.jpg' %}" alt="Default Barber Image" class="barber-image"> <!-- Use a default image if none -->
+                                {% endif %}
+                                <div>{{ barber.first_name }} {{ barber.last_name }} - {{ barber.address }}</div>
+                            </a>
+                        </li>
+                    {% empty %}
+                        <li>No barbers available.</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <footer>
+            <p>&copy; 2024 Your Website</p>
+        </footer>
+    </div>
+
+    <script>
+        document.getElementById('logoutButton').addEventListener('click', function() {
+            // Logout function
+            fetch("{% url 'logout' %}", {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}', // CSRF token for security
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({}) // No body needed for logout
+            })
+            .then(response => {
+                if (response.ok) {
+                    // Redirect to home or login page after successful logout
+                    window.location.href = "{% url 'home' %}"; // Change this to your desired redirect page
+                } else {
+                    alert('Logout failed. Please try again.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred. Please try again.');
+            });
+        });
+    </script>
+</body>
+</html>

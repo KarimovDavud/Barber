@@ -1,0 +1,93 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ barber.first_name }} {{ barber.last_name }} - Barber Details</title>
+    <link rel="stylesheet" href="{% static 'users/barber_detail.css' %}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>{{ barber.first_name }} {{ barber.last_name }}</h1>
+            <h3>{{ barber.address }}</h3>
+        </header>
+        
+        <div class="content-wrapper">
+            <!-- Barber Image on the Left -->
+            <div class="left-column">
+                <img src="{{ barber.image.url }}" alt="{{ barber.first_name }}" class="barber-image">
+            </div>
+
+            <!-- Services Section Below the Image -->
+            <div class="services">
+                <h2>Services Provided</h2>
+                <ul>
+                    {% for service in barber.services.all %}
+                        <li>{{ service.name }} - {{ service.price }}</li>
+                    {% empty %}
+                        <li>No services available.</li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <!-- Details and Calendar on the Right -->
+            <div class="right-column">
+                <div class="details">
+                    <h2>Working Salons</h2>
+                    <ul>
+                        {% for salon in barber.salons.all %}
+                            <li>
+                                <a href="{% url 'salon_detail' salon.id %}">{{ salon.name }}</a>
+                            </li>
+                        {% empty %}
+                            <li>No associated salons.</li>
+                        {% endfor %}
+                    </ul>
+
+                    <h2>Social Links</h2>
+                    <p>TikTok: 
+                        {% if barber.tiktok_username %}
+                            <a href="https://www.tiktok.com/@{{ barber.tiktok_username }}" target="_blank">{{ barber.tiktok_username }}</a>
+                        {% else %}
+                            No TikTok username available.
+                        {% endif %}
+                    </p>
+                    <p>Instagram: 
+                        {% if barber.instagram_username %}
+                            <a href="https://www.instagram.com/{{ barber.instagram_username }}" target="_blank">{{ barber.instagram_username }}</a>
+                        {% else %}
+                            No Instagram username available.
+                        {% endif %}
+                    </p>
+
+                    <!-- Work Hours Section -->
+                    <h2>Working Hours</h2>
+                    <ul>
+                        {% for hour in barber.working_hours.all %}
+                            <li>{{ hour.day_of_week }}: {{ hour.start_time|date:"H:i" }} - {{ hour.end_time|date:"H:i" }}</li>
+                        {% empty %}
+                            <li>No working hours available.</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Review/Comment Section at the Bottom -->
+        <div class="review-section">
+            <h2>Leave a Review</h2>
+            <form method="post">
+                {% csrf_token %}
+                <textarea name="review" placeholder="Write your review here..."></textarea>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+
+        <footer>
+            <a href="{% url 'home' %}">Back to Home</a>
+        </footer>
+    </div>
+</body>
+</html>

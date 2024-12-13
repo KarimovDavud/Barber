@@ -1,0 +1,19 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Options</title>
+    <link rel="stylesheet" href="{% static 'users/register_choices.css' %}"></head>
+<body>
+    <div class="container">
+        <h1>Qeydiyyat Seçimləri</h1>
+        <div class="registration-options">
+            <a href="{% url 'register_user' %}" class="registration-link">İstifadəçi Qeydiyyatı</a>
+            <a href="{% url 'register_barber' %}" class="registration-link">Barber Qeydiyyatı</a>
+            <a href="{% url 'register_salon' %}" class="registration-link">Salon Qeydiyyatı</a>
+        </div>
+    </div>
+</body>
+</html>
